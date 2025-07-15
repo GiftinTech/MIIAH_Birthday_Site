@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -98,7 +97,12 @@ All colors MUST be HSL.
     @apply bg-background text-foreground font-inter;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-playfair;
   }
 
@@ -131,11 +135,11 @@ All colors MUST be HSL.
 
 /* Elegant gradient backgrounds */
 .gradient-gold {
-  background: linear-gradient(135deg, #D4AF37, #F4E4BC);
+  background: linear-gradient(135deg, #d4af37, #f4e4bc);
 }
 
 .gradient-cream {
-  background: linear-gradient(135deg, #FAF7F2, #F4E4BC);
+  background: linear-gradient(135deg, #faf7f2, #f4e4bc);
 }
 
 /* Magazine-style decorative elements */
@@ -144,11 +148,29 @@ All colors MUST be HSL.
 }
 
 .decorative-line::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -4px;
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+  background: linear-gradient(90deg, transparent, #d4af37, transparent);
+}
+
+@keyframes char-pulse {
+  0%,
+  100% {
+    transform: scale(1); /* Normal size */
+  }
+  50% {
+    transform: scale(1.2); /* Grow big */
+  }
+}
+
+.animate-char-pulse {
+  animation-name: char-pulse;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  transform-origin: center center;
 }

@@ -14,7 +14,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 
-export const WishesSection = () => {
+const WishesSection = () => {
   const [newWish, setNewWish] = useState("");
   const [wishAuthor, setWishAuthor] = useState("");
   const [wishes, setWishes] = useState<
@@ -212,3 +212,5 @@ export const WishesSection = () => {
     </div>
   );
 };
+
+export default WishesSection;

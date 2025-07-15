@@ -6,7 +6,7 @@ interface BirthdayPlayerProps {
   autoPlay?: boolean;
 }
 
-export const BirthdayPlayer = ({ autoPlay = false }: BirthdayPlayerProps) => {
+const BirthdayPlayer = ({ autoPlay = false }: BirthdayPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -250,3 +250,5 @@ export const BirthdayPlayer = ({ autoPlay = false }: BirthdayPlayerProps) => {
     </div>
   );
 };
+
+export default BirthdayPlayer;

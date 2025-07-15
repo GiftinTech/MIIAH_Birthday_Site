@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Gamepad2,
   Sparkles,
@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-export const Games = () => {
+const Games = () => {
   const [currentGame, setCurrentGame] = useState("quiz");
   const [quizScore, setQuizScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -30,7 +30,7 @@ export const Games = () => {
   const [totalSpent, setTotalSpent] = useState(0);
   const [revealedSurprise, setRevealedSurprise] = useState<number | null>(null);
 
-  // MIIAH's Personality Quiz Questions - Expanded to 10
+  // MIIAH's Personality Quiz Questions - Updated for multiple correct answers
   const quizQuestions = [
     {
       question: "It's Friday night, what would MIIAH choose to do?",
@@ -39,26 +39,26 @@ export const Games = () => {
         "Netflix, snacks and Anime",
         "Video call with friends while sewing",
       ],
-      correct: 1,
+      correct: [1, 2],
     },
     {
       question: "What was the colour of MIIAH's Convocation dress",
       options: ["Blue", "Black", "White"],
-      correct: 1,
+      correct: [1],
     },
     {
       question: "When is MIIAH launching her collection?",
       options: ["On Christmas Day", "19th July, 2025", "Next month"],
-      correct: 1,
+      correct: [1],
     },
     {
       question: "When MIIAH gets stressed, she:",
       options: [
         "Reorganizes her workspace",
         "Sketches random designs",
-        "Calls her best friend",
+        "Steps out to clear her head",
       ],
-      correct: 1,
+      correct: [1, 2],
     },
     {
       question: "MIIAH's perfect birthday gift would be:",
@@ -67,7 +67,7 @@ export const Games = () => {
         "High-quality sewing supplies",
         "Surprise party with loved ones",
       ],
-      correct: 2,
+      correct: [0, 1, 2],
     },
     {
       question: "When MIIAH sees a badly designed outfit, she:",
@@ -76,28 +76,27 @@ export const Games = () => {
         "Takes notes for what not to do",
         "Offers styling advice",
       ],
-      correct: 0,
+      correct: [0, 1],
     },
     {
       question:
         "If MIIAH wasn't a fashion designer, what career path might she have taken?",
       options: ["Dancer", "Chef", "Artist"],
-      correct: 1,
+      correct: [1, 2],
     },
     {
-      question: "At a party, MIIAH is most likely to:",
+      question: "At a friend's party, MIIAH is most likely to:",
       options: [
         "Be the life of the party",
         "Help the host with everything",
         "Take candid photos of everyone",
       ],
-      correct: 1,
+      correct: [0, 1, 2],
     },
-
     {
       question: "When choosing an outfit, MIIAH prioritizes:",
       options: ["Comfort above all", "Latest trends", "Bold statement pieces"],
-      correct: 1,
+      correct: [0],
     },
     {
       question: "MIIAH's ideal creative space would have:",
@@ -106,11 +105,10 @@ export const Games = () => {
         "Colorful inspiration boards",
         "Vintage furniture and plants",
       ],
-      correct: 2,
+      correct: [0, 2],
     },
   ];
 
-  // Expanded Surprise Cards Data - 20+ items to randomize from
   const allSurpriseCardItems = [
     {
       type: "buy",
@@ -156,7 +154,6 @@ export const Games = () => {
   ];
 
   const initializeSurpriseGame = () => {
-    // Randomly select 16 items from the full list
     const cards = [...allSurpriseCardItems]
       .sort(() => Math.random() - 0.5)
       .slice(0, 16)
@@ -191,7 +188,8 @@ export const Games = () => {
   };
 
   const handleQuizAnswer = (answerIndex: number) => {
-    if (answerIndex === quizQuestions[currentQuestion].correct) {
+    // Check if the selected answer is one of the correct options for the current question
+    if (quizQuestions[currentQuestion].correct.includes(answerIndex)) {
       setQuizScore((prev) => prev + 1);
     }
 
@@ -208,7 +206,7 @@ export const Games = () => {
     setShowResult(false);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (currentGame === "surprise") {
       initializeSurpriseGame();
     }
@@ -402,3 +400,5 @@ export const Games = () => {
     </div>
   );
 };
+
+export default Games;

@@ -226,7 +226,7 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
     return (
       <div className="min-h-screen bg-gradient-to-br from-cream via-white to-champagne flex items-center justify-center px-4">
         <Card className="max-w-4xl mx-auto shadow-2xl border-gold/20">
-          <CardContent className="p-12 text-center">
+          <CardContent className="py-12 px-2 sm:p-12  text-center">
             <div className="mb-8">
               <Calendar className="w-16 h-16 text-gold mx-auto mb-6 animate-float" />
               <h1 className="font-playfair text-4xl md:text-5xl font-bold text-navy mb-4">
@@ -289,7 +289,7 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
             </div>
 
             <p className="font-cormorant text-lg text-charcoal">
-              Appreciate the website design, aesthetics, and functionality
+              Appreciate the website design, aesthetics and functionality
               anytime!
             </p>
           </CardContent>
@@ -300,8 +300,8 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-cream via-white to-champagne flex items-center justify-center px-4">
-      <Card className="max-w-4xl mx-auto shadow-2xl border-gold/20">
-        <CardContent className="p-12 text-center">
+      <Card className="max-w-4xl mx-auto shadow-2xl  border-gold/20">
+        <CardContent className="py-12 px-2 sm:p-12 text-center">
           <div className="mb-8">
             <Clock className="w-16 h-16 text-gold mx-auto mb-6 animate-float" />
             <h1 className="font-playfair text-4xl md:text-5xl font-bold text-navy mb-4">

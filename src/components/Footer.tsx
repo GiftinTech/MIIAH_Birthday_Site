@@ -1,7 +1,7 @@
 import React from "react";
 import { Heart, Sparkles, Scissors, Palette } from "lucide-react";
 
-export const Footer = () => {
+const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -24,7 +24,7 @@ export const Footer = () => {
           </p>
 
           {/* Decorative Elements */}
-          <div className="flex justify-center items-center space-x-6 mb-8">
+          <div className="flex justify-center items-center sm:space-x-6 space-x-4 mb-8">
             <div className="flex items-center space-x-2">
               <Heart className="w-5 h-5 text-gold" />
               <span className="font-inter text-cream/80">Fashion</span>
@@ -87,3 +87,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export default Footer;

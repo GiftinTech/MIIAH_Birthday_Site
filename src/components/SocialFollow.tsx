@@ -3,7 +3,7 @@ import { Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-export const SocialFollow = () => {
+const SocialFollow = () => {
   const socialAccounts = [
     {
       name: "MIIAH Couture",
@@ -74,3 +74,5 @@ export const SocialFollow = () => {
     </section>
   );
 };
+
+export default SocialFollow;

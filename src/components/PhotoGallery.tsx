@@ -2,35 +2,48 @@ import React, { useState } from "react";
 import { Camera, Heart, ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Import your image assets
 import artWork from "../assets/images/art.jpg";
 import braidShot from "../assets/images/braidshot.jpg";
 import newYearsShot from "../assets/images/newyearsshot.jpg";
 import staircaseShot from "../assets/images/staircaseshot.jpg";
 
-export const PhotoGallery = () => {
+// Define a type for a photo object
+interface Photo {
+  url: string;
+  caption: string;
+  title: string;
+}
+
+const PhotoGallery = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  // State to manage which photo is currently selected for the modal view
+  const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   // Personal memory photos
-  const photos = [
+  const photos: Photo[] = [
+    // Explicitly type photos array
     {
       url: artWork,
-      caption: "That perfect day when we couldn't stop laughing",
-      title: "Best Friends Forever",
+      caption: "You make my world so colourful like this painting",
+      title: "An Artist",
     },
     {
       url: braidShot,
-      caption: "Coffee dates and heart-to-heart conversations",
-      title: "Our Coffee Moments",
+      caption: "This picture symbolises how much you've cheered me on.",
+      title: "Cheer Leader",
     },
     {
       url: staircaseShot,
-      caption: "Exploring new places and making memories",
-      title: "Adventure Buddies",
+      caption:
+        "Even when the odds aren't in your favour, you bend them to your will.",
+      title: "Eighttt tha'",
     },
     {
       url: newYearsShot,
-      caption: "Those spontaneous trips that became our best stories",
-      title: "Memory Lane",
+      caption:
+        "It's refreshing to start the beginning with a pure and serene soul.",
+      title: "Beginning",
     },
   ];
 
@@ -42,15 +55,21 @@ export const PhotoGallery = () => {
     setCurrentSlide((prev) => (prev - 1 + photos.length) % photos.length);
   };
 
+  // Function to handle opening the photo in a modal
+  const handlePhotoClick = (photo: Photo) => {
+    setSelectedPhoto(photo);
+  };
+
   return (
     <div className="animate-fade-in">
       {/* Main Gallery */}
       <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden mb-12">
         <div className="relative h-96 md:h-[500px]">
           <img
-            src={photos[currentSlide].url + "?w=1200&h=500&fit=crop"}
+            src={photos[currentSlide].url} // Removed query params for cleaner src
             alt={photos[currentSlide].caption}
-            className="w-full h-full object-cover transition-all duration-500"
+            className="w-full h-full object-cover transition-all duration-500 cursor-pointer"
+            onClick={() => handlePhotoClick(photos[currentSlide])} // Click main image to open modal
           />
 
           {/* Overlay */}
@@ -102,13 +121,13 @@ export const PhotoGallery = () => {
         {photos.map((photo, index) => (
           <div
             key={index}
-            onClick={() => setCurrentSlide(index)}
+            onClick={() => handlePhotoClick(photo)} // Click thumbnail to open modal
             className={`relative cursor-pointer rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 ${
               index === currentSlide ? "ring-4 ring-gold" : ""
             }`}
           >
             <img
-              src={photo.url + "?w=300&h=200&fit=crop"}
+              src={photo.url} // Removed query params for cleaner src
               alt={photo.caption}
               className="w-full h-32 object-cover"
             />
@@ -123,6 +142,39 @@ export const PhotoGallery = () => {
           </div>
         ))}
       </div>
+
+      {/* Selected Photo Viewer (Simple Modal) */}
+      {selectedPhoto && (
+        <div
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+          onClick={() => setSelectedPhoto(null)} // Close modal when clicking outside content
+        >
+          <div
+            className="relative bg-white rounded-lg p-6 max-w-2xl w-full text-center"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {" "}
+            {/* Prevent clicks inside content from closing */}
+            <Button
+              onClick={() => setSelectedPhoto(null)}
+              className="absolute top-2 right-2 bg-transparent text-gray-600 hover:text-gray-900"
+            >
+              &times; {/* Simple close button */}
+            </Button>
+            <img
+              src={selectedPhoto.url}
+              alt={selectedPhoto.caption}
+              className="max-h-[70vh] w-full object-contain mx-auto mb-4 rounded-md"
+            />
+            <h3 className="font-playfair text-2xl font-semibold text-navy mb-2">
+              {selectedPhoto.title}
+            </h3>
+            <p className="font-cormorant text-charcoal">
+              {selectedPhoto.caption}
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Memory Quote */}
       <div className="text-center mt-12">
@@ -141,3 +193,4 @@ export const PhotoGallery = () => {
     </div>
   );
 };
+export default PhotoGallery;
