@@ -194,6 +194,7 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
   const effectiveIsPostBirthday =
     isPastBirthdayThisYearActual || viewMode === "post";
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleTestAccess = () => {
     setIsTestMode(true);
     setViewMode("birthday");
@@ -307,7 +308,7 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
               Not MIIAH's Birthday Yet!
             </h1>
             <p className="font-cormorant text-xl text-charcoal mb-8">
-              This special celebration opens only on July 19th
+              This special opens only on July 19th 🎉
             </p>
           </div>
 
@@ -378,10 +379,11 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
 
           <div className="text-center">
             <p className="font-cormorant text-lg text-charcoal mb-6">
-              Come back on her special day to explore the full celebration!
+              Come back on her special day to celebrate with her!
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {/* test mode ui */}
+            {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={handleTestAccess}
                 className="bg-gold/20 hover:bg-gold/30 text-charcoal border border-gold/30 px-6 py-3 rounded-xl text-sm"
@@ -394,7 +396,7 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
               >
                 🔍 View Post-Birthday Page
               </Button>
-            </div>
+            </div> */}
           </div>
         </CardContent>
       </Card>

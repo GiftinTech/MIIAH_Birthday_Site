@@ -1,7 +1,11 @@
+import React, { useState } from "react";
+import { Camera, Heart, ArrowLeft, ArrowRight } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-import React, { useState } from 'react';
-import { Camera, Heart, ArrowLeft, ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import artWork from "../assets/images/art.jpg";
+import braidShot from "../assets/images/braidshot.jpg";
+import newYearsShot from "../assets/images/newyearsshot.jpg";
+import staircaseShot from "../assets/images/staircaseshot.jpg";
 
 export const PhotoGallery = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -9,25 +13,25 @@ export const PhotoGallery = () => {
   // Personal memory photos
   const photos = [
     {
-      url: "https://images.unsplash.com/photo-1483058712412-4245e9b90334",
+      url: artWork,
       caption: "That perfect day when we couldn't stop laughing",
-      title: "Best Friends Forever"
+      title: "Best Friends Forever",
     },
     {
-      url: "https://images.unsplash.com/photo-1494891848038-7bd202a2afeb", 
+      url: braidShot,
       caption: "Coffee dates and heart-to-heart conversations",
-      title: "Our Coffee Moments"
+      title: "Our Coffee Moments",
     },
     {
-      url: "https://images.unsplash.com/photo-1487958449943-2429e8be8625",
+      url: staircaseShot,
       caption: "Exploring new places and making memories",
-      title: "Adventure Buddies"
+      title: "Adventure Buddies",
     },
     {
-      url: "https://images.unsplash.com/photo-1472396961693-142e6e269027",
+      url: newYearsShot,
       caption: "Those spontaneous trips that became our best stories",
-      title: "Memory Lane"
-    }
+      title: "Memory Lane",
+    },
   ];
 
   const nextSlide = () => {
@@ -48,7 +52,7 @@ export const PhotoGallery = () => {
             alt={photos[currentSlide].caption}
             className="w-full h-full object-cover transition-all duration-500"
           />
-          
+
           {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent">
             <div className="absolute bottom-6 left-6 right-6 text-white">
@@ -68,7 +72,7 @@ export const PhotoGallery = () => {
           >
             <ArrowLeft className="w-5 h-5 text-white" />
           </Button>
-          
+
           <Button
             onClick={nextSlide}
             className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-full w-12 h-12 p-0"
@@ -84,9 +88,9 @@ export const PhotoGallery = () => {
               key={index}
               onClick={() => setCurrentSlide(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === currentSlide 
-                  ? 'bg-gold scale-125' 
-                  : 'bg-gray-300 hover:bg-gray-400'
+                index === currentSlide
+                  ? "bg-gold scale-125"
+                  : "bg-gray-300 hover:bg-gray-400"
               }`}
             />
           ))}
@@ -100,7 +104,7 @@ export const PhotoGallery = () => {
             key={index}
             onClick={() => setCurrentSlide(index)}
             className={`relative cursor-pointer rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:scale-105 ${
-              index === currentSlide ? 'ring-4 ring-gold' : ''
+              index === currentSlide ? "ring-4 ring-gold" : ""
             }`}
           >
             <img
@@ -124,7 +128,8 @@ export const PhotoGallery = () => {
       <div className="text-center mt-12">
         <div className="bg-gradient-gold rounded-2xl p-8 max-w-2xl mx-auto">
           <blockquote className="font-cormorant text-2xl md:text-3xl text-navy italic mb-4">
-            "Every photo tells a story of friendship, laughter, and unforgettable moments with you"
+            "Every photo tells a story of friendship, laughter, and
+            unforgettable moments with you"
           </blockquote>
           <div className="flex items-center justify-center space-x-2 text-charcoal">
             <Heart className="w-5 h-5 text-gold" />

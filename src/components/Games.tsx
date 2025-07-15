@@ -1,15 +1,31 @@
-
-import React, { useState } from 'react';
-import { Gamepad2, Sparkles, Heart, Award, RefreshCw, Gift, ShoppingBag } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import React, { useState } from "react";
+import {
+  Gamepad2,
+  Sparkles,
+  Award,
+  RefreshCw,
+  Gift,
+  ShoppingBag,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 
 export const Games = () => {
-  const [currentGame, setCurrentGame] = useState('quiz');
+  const [currentGame, setCurrentGame] = useState("quiz");
   const [quizScore, setQuizScore] = useState(0);
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showResult, setShowResult] = useState(false);
-  const [surpriseCards, setSurpriseCards] = useState<Array<{id: number, flipped: boolean, type: 'buy' | 'do', item: string, price?: string, emoji: string}>>([]);
+  const [surpriseCards, setSurpriseCards] = useState<
+    Array<{
+      id: number;
+      flipped: boolean;
+      type: "buy" | "do";
+      item: string;
+      price?: string;
+      emoji: string;
+    }>
+  >([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [totalSpent, setTotalSpent] = useState(0);
   const [revealedSurprise, setRevealedSurprise] = useState<number | null>(null);
@@ -18,80 +34,125 @@ export const Games = () => {
   const quizQuestions = [
     {
       question: "It's Friday night, what would MIIAH choose to do?",
-      options: ["Design sketches with wine", "Netflix and creative snacks", "Organize her fabric collection", "Video call with friends while sewing"],
-      correct: 0
+      options: [
+        "Out having fun",
+        "Netflix, snacks and Anime",
+        "Video call with friends while sewing",
+      ],
+      correct: 1,
     },
     {
-      question: "MIIAH's ideal weekend shopping trip would be:",
-      options: ["Vintage fabric stores", "High-end fashion boutiques", "Local craft markets", "Online shopping in pajamas"],
-      correct: 2
+      question: "What was the colour of MIIAH's Convocation dress",
+      options: ["Blue", "Black", "White"],
+      correct: 1,
+    },
+    {
+      question: "When is MIIAH launching her collection?",
+      options: ["On Christmas Day", "19th July, 2025", "Next month"],
+      correct: 1,
     },
     {
       question: "When MIIAH gets stressed, she:",
-      options: ["Reorganizes her workspace", "Makes herself a perfect cup of tea", "Sketches random designs", "Calls her best friend"],
-      correct: 1
+      options: [
+        "Reorganizes her workspace",
+        "Sketches random designs",
+        "Calls her best friend",
+      ],
+      correct: 1,
     },
     {
       question: "MIIAH's perfect birthday gift would be:",
-      options: ["Expensive designer bag", "Handmade item from a friend", "High-quality sewing supplies", "Surprise party with loved ones"],
-      correct: 2
+      options: [
+        "Handmade item from a friend",
+        "High-quality sewing supplies",
+        "Surprise party with loved ones",
+      ],
+      correct: 2,
     },
     {
       question: "When MIIAH sees a badly designed outfit, she:",
-      options: ["Compliments it anyway", "Mentally redesigns it", "Takes notes for what not to do", "Offers styling advice"],
-      correct: 1
+      options: [
+        "Mentally redesigns it",
+        "Takes notes for what not to do",
+        "Offers styling advice",
+      ],
+      correct: 0,
     },
     {
-      question: "MIIAH's dream vacation would be:",
-      options: ["Fashion week in Paris", "Textile markets in Morocco", "Quiet beach with design books", "Road trip with friends"],
-      correct: 1
+      question:
+        "If MIIAH wasn't a fashion designer, what career path might she have taken?",
+      options: ["Dancer", "Chef", "Artist"],
+      correct: 1,
     },
     {
       question: "At a party, MIIAH is most likely to:",
-      options: ["Be the life of the party", "Have deep conversations with close friends", "Help the host with everything", "Take candid photos of everyone"],
-      correct: 1
+      options: [
+        "Be the life of the party",
+        "Help the host with everything",
+        "Take candid photos of everyone",
+      ],
+      correct: 1,
     },
-    {
-      question: "MIIAH's favorite way to start the morning:",
-      options: ["Strong coffee and news", "Meditation and sketching", "Workout and smoothie", "Checking fashion blogs"],
-      correct: 0
-    },
+
     {
       question: "When choosing an outfit, MIIAH prioritizes:",
-      options: ["Comfort above all", "Latest trends", "Timeless elegance", "Bold statement pieces"],
-      correct: 2
+      options: ["Comfort above all", "Latest trends", "Bold statement pieces"],
+      correct: 1,
     },
     {
       question: "MIIAH's ideal creative space would have:",
-      options: ["Minimalist white walls", "Colorful inspiration boards", "Vintage furniture and plants", "High-tech equipment"],
-      correct: 2
-    }
+      options: [
+        "Minimalist white walls",
+        "Colorful inspiration boards",
+        "Vintage furniture and plants",
+      ],
+      correct: 2,
+    },
   ];
 
   // Expanded Surprise Cards Data - 20+ items to randomize from
   const allSurpriseCardItems = [
-    { type: 'buy', item: 'Fancy coffee for MIIAH', price: '₦2,000', emoji: '☕' },
-    { type: 'buy', item: 'Beautiful flowers', price: '₦4,800', emoji: '🌸' },
-    { type: 'buy', item: 'Her favorite chocolate', price: '₦3,200', emoji: '🍫' },
-    { type: 'buy', item: 'Cute stickers for her planner', price: '₦1,200', emoji: '✨' },
-    { type: 'buy', item: 'Nice scented candle', price: '₦6,000', emoji: '🕯️' },
-    { type: 'buy', item: 'Pretty bookmark', price: '₦1,600', emoji: '🔖' },
-    { type: 'buy', item: 'Artisan tea blend', price: '₦4,000', emoji: '🍵' },
-    { type: 'buy', item: 'Small succulent plant', price: '₦2,400', emoji: '🌵' },
-    { type: 'buy', item: 'Vintage button set', price: '₦2,800', emoji: '🔘' },
-    { type: 'buy', item: 'Designer notebook', price: '₦5,200', emoji: '📔' },
-    { type: 'buy', item: 'Silk hair scrunchie', price: '₦3,600', emoji: '🎀' },
-    { type: 'buy', item: 'Artisan soap bar', price: '₦2,000', emoji: '🧼' },
-    { type: 'do', item: 'Give MIIAH a big hug', emoji: '🤗' },
-    { type: 'do', item: 'Tell her your favorite memory together', emoji: '💕' },
-    { type: 'do', item: 'Compliment her latest design', emoji: '👗' },
-    { type: 'do', item: 'Send her a funny meme', emoji: '😂' },
-    { type: 'do', item: 'Write her a heartfelt note', emoji: '💌' },
-    { type: 'do', item: 'Sing happy birthday to her', emoji: '🎵' },
-    { type: 'do', item: 'Share an old photo together', emoji: '📸' },
-    { type: 'do', item: 'Tell her how proud you are', emoji: '🌟' },
-    { type: 'do', item: 'Plan a coffee date with her', emoji: '☕' },
-    { type: 'do', item: 'Ask about her current projects', emoji: '✂️' },
+    {
+      type: "buy",
+      item: "A bottle of wine for MIIAH",
+      price: "₦10,000",
+      emoji: "🍾",
+    },
+    { type: "buy", item: "Beautiful flowers", price: "₦10,800", emoji: "🌸" },
+    {
+      type: "buy",
+      item: "Her favorite chocolate",
+      price: "₦10,200",
+      emoji: "🍫",
+    },
+    {
+      type: "buy",
+      item: "Cute stickers for her planner",
+      price: "₦5,200",
+      emoji: "✨",
+    },
+    { type: "buy", item: "Nice scented candle", price: "₦10,000", emoji: "🕯️" },
+    { type: "buy", item: "Pretty bookmark", price: "₦4,600", emoji: "🔖" },
+    { type: "buy", item: "Artisan tea blend", price: "₦5,000", emoji: "🍵" },
+    {
+      type: "buy",
+      item: "Small succulent plant",
+      price: "₦8,400",
+      emoji: "🌵",
+    },
+    { type: "buy", item: "Designer notebook", price: "₦8,200", emoji: "📔" },
+    { type: "buy", item: "Silk hair scrunchie", price: "₦3,600", emoji: "🎀" },
+    { type: "buy", item: "Artisan soap bar", price: "₦5,000", emoji: "🧼" },
+    { type: "do", item: "Give MIIAH a big hug", emoji: "🤗" },
+    { type: "do", item: "Tell her your favorite memory together", emoji: "💕" },
+    { type: "do", item: "Compliment her latest design", emoji: "👗" },
+    { type: "do", item: "Send her a funny meme", emoji: "😂" },
+    { type: "do", item: "Write her a heartfelt note", emoji: "💌" },
+    { type: "do", item: "Sing happy birthday to her", emoji: "🎵" },
+    { type: "do", item: "Share an old photo together", emoji: "📸" },
+    { type: "do", item: "Tell her how proud you are", emoji: "🌟" },
+    { type: "do", item: "Plan a brunch date with her", emoji: "☕" },
+    { type: "do", item: "Ask about her current projects", emoji: "✂️" },
   ];
 
   const initializeSurpriseGame = () => {
@@ -102,10 +163,10 @@ export const Games = () => {
       .map((item, index) => ({
         id: index,
         flipped: false,
-        type: item.type as 'buy' | 'do',
+        type: item.type as "buy" | "do",
         item: item.item,
         price: item.price,
-        emoji: item.emoji
+        emoji: item.emoji,
       }));
     setSurpriseCards(cards);
     setFlippedCards([]);
@@ -121,19 +182,21 @@ export const Games = () => {
     setSurpriseCards(newCards);
     setRevealedSurprise(cardId);
 
-    if (newCards[cardId].type === 'buy' && newCards[cardId].price) {
-      const price = parseInt(newCards[cardId].price!.replace('₦', '').replace(',', ''));
-      setTotalSpent(prev => prev + price);
+    if (newCards[cardId].type === "buy" && newCards[cardId].price) {
+      const price = parseInt(
+        newCards[cardId].price!.replace("₦", "").replace(",", "")
+      );
+      setTotalSpent((prev) => prev + price);
     }
   };
 
   const handleQuizAnswer = (answerIndex: number) => {
     if (answerIndex === quizQuestions[currentQuestion].correct) {
-      setQuizScore(prev => prev + 1);
+      setQuizScore((prev) => prev + 1);
     }
 
     if (currentQuestion < quizQuestions.length - 1) {
-      setCurrentQuestion(prev => prev + 1);
+      setCurrentQuestion((prev) => prev + 1);
     } else {
       setShowResult(true);
     }
@@ -146,9 +209,10 @@ export const Games = () => {
   };
 
   React.useEffect(() => {
-    if (currentGame === 'surprise') {
+    if (currentGame === "surprise") {
       initializeSurpriseGame();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentGame]);
 
   return (
@@ -157,22 +221,22 @@ export const Games = () => {
       <div className="flex justify-center mb-12">
         <div className="bg-white rounded-2xl p-2 shadow-lg flex space-x-2">
           <Button
-            onClick={() => setCurrentGame('quiz')}
+            onClick={() => setCurrentGame("quiz")}
             className={`px-6 py-3 rounded-xl transition-all ${
-              currentGame === 'quiz'
-                ? 'bg-gold text-navy shadow-md'
-                : 'bg-transparent text-charcoal hover:bg-gold/20'
+              currentGame === "quiz"
+                ? "bg-gold text-navy shadow-md"
+                : "bg-transparent text-charcoal hover:bg-gold/20"
             }`}
           >
             <Sparkles className="w-4 h-4 mr-2" />
             Personality Quiz
           </Button>
           <Button
-            onClick={() => setCurrentGame('surprise')}
+            onClick={() => setCurrentGame("surprise")}
             className={`px-6 py-3 rounded-xl transition-all ${
-              currentGame === 'surprise'
-                ? 'bg-gold text-navy shadow-md'
-                : 'bg-transparent text-charcoal hover:bg-gold/20'
+              currentGame === "surprise"
+                ? "bg-gold text-navy shadow-md"
+                : "bg-transparent text-charcoal hover:bg-gold/20"
             }`}
           >
             <Gift className="w-4 h-4 mr-2" />
@@ -182,7 +246,7 @@ export const Games = () => {
       </div>
 
       {/* MIIAH's Personality Quiz Game */}
-      {currentGame === 'quiz' && (
+      {currentGame === "quiz" && (
         <Card className="max-w-2xl mx-auto shadow-2xl border-gold/20">
           <CardContent className="p-8">
             {!showResult ? (
@@ -205,15 +269,17 @@ export const Games = () => {
                     {quizQuestions[currentQuestion].question}
                   </h4>
                   <div className="space-y-3">
-                    {quizQuestions[currentQuestion].options.map((option, index) => (
-                      <Button
-                        key={index}
-                        onClick={() => handleQuizAnswer(index)}
-                        className="w-full text-left justify-start p-4 bg-cream hover:bg-gold/20 text-charcoal border border-gold/20 rounded-xl transition-all hover:scale-105"
-                      >
-                        {option}
-                      </Button>
-                    ))}
+                    {quizQuestions[currentQuestion].options.map(
+                      (option, index) => (
+                        <Button
+                          key={index}
+                          onClick={() => handleQuizAnswer(index)}
+                          className="w-full text-left justify-start p-4 bg-cream hover:bg-gold/20 text-charcoal border border-gold/20 rounded-xl transition-all hover:scale-105"
+                        >
+                          {option}
+                        </Button>
+                      )
+                    )}
                   </div>
                 </div>
               </div>
@@ -228,14 +294,13 @@ export const Games = () => {
                     Your Score: {quizScore}/{quizQuestions.length}
                   </p>
                   <p className="text-charcoal">
-                    {quizScore >= 8 
+                    {quizScore >= 8
                       ? "Perfect! You know MIIAH incredibly well! 🎉"
                       : quizScore >= 6
                       ? "Great job! You're a wonderful friend! ✨"
                       : quizScore >= 4
                       ? "Good effort! You know her pretty well! 💕"
-                      : "Time to spend more quality time with MIIAH! 💖"
-                    }
+                      : "Time to spend more quality time with MIIAH! 💖"}
                   </p>
                 </div>
                 <Button
@@ -252,7 +317,7 @@ export const Games = () => {
       )}
 
       {/* Surprise Cards Game */}
-      {currentGame === 'surprise' && (
+      {currentGame === "surprise" && (
         <Card className="max-w-4xl mx-auto shadow-2xl border-gold/20">
           <CardContent className="p-8">
             <div className="text-center mb-8">
@@ -261,10 +326,14 @@ export const Games = () => {
                 Surprise Cards for MIIAH
               </h3>
               <p className="font-cormorant text-lg text-charcoal mb-4">
-                Flip cards to reveal sweet gestures or affordable gifts! {revealedSurprise === null ? "Choose one to reveal." : ""}
+                Flip cards to reveal sweet gestures or affordable gifts!{" "}
+                {revealedSurprise === null ? "Choose one to reveal." : ""}
               </p>
               <div className="text-sm text-charcoal flex items-center justify-center gap-4">
-                <span>Cards Revealed: {surpriseCards.filter(card => card.flipped).length}/1</span>
+                <span>
+                  Cards Revealed:{" "}
+                  {surpriseCards.filter((card) => card.flipped).length}/1
+                </span>
                 {totalSpent > 0 && (
                   <span className="flex items-center">
                     <ShoppingBag className="w-4 h-4 mr-1" />
@@ -281,12 +350,12 @@ export const Games = () => {
                   onClick={() => handleSurpriseCardClick(card.id)}
                   className={`aspect-square rounded-xl flex flex-col items-center justify-center text-center transition-all duration-300 p-2 ${
                     card.flipped
-                      ? card.type === 'buy' 
-                        ? 'bg-gold shadow-lg text-navy'
-                        : 'bg-gradient-cream shadow-lg text-navy'
+                      ? card.type === "buy"
+                        ? "bg-gold shadow-lg text-navy"
+                        : "bg-gradient-cream shadow-lg text-navy"
                       : revealedSurprise === null
-                      ? 'bg-white shadow-md hover:bg-gold/20 text-charcoal cursor-pointer hover:scale-105'
-                      : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                      ? "bg-white shadow-md hover:bg-gold/20 text-charcoal cursor-pointer hover:scale-105"
+                      : "bg-gray-200 text-gray-400 cursor-not-allowed"
                   }`}
                 >
                   {card.flipped ? (
@@ -296,7 +365,9 @@ export const Games = () => {
                         {card.item}
                       </div>
                       {card.price && (
-                        <div className="text-xs font-bold mt-1">{card.price}</div>
+                        <div className="text-xs font-bold mt-1">
+                          {card.price}
+                        </div>
                       )}
                     </div>
                   ) : (
@@ -312,10 +383,9 @@ export const Games = () => {
                   🎉 Surprise revealed! 🎉
                 </p>
                 <p className="text-charcoal mb-4">
-                  {totalSpent > 0 
+                  {totalSpent > 0
                     ? `You've planned a sweet gesture worth ₦${totalSpent.toLocaleString()}!`
-                    : "You've planned a beautiful gesture for MIIAH!"
-                  }
+                    : "You've planned a beautiful gesture for MIIAH!"}
                 </p>
                 <Button
                   onClick={initializeSurpriseGame}

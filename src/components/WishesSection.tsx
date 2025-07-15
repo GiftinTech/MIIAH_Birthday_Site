@@ -1,43 +1,63 @@
-
-import React, { useState, useEffect } from 'react';
-import { Heart, Send, Star, Gift, Clock } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Textarea } from '@/components/ui/textarea';
-import { Input } from '@/components/ui/input';
-import { db } from '@/lib/firebase';
-import { collection, addDoc, onSnapshot, orderBy, query, serverTimestamp } from 'firebase/firestore';
+import React, { useState, useEffect } from "react";
+import { Heart, Send, Star, Gift, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import { db } from "@/lib/firebase";
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  orderBy,
+  query,
+  serverTimestamp,
+} from "firebase/firestore";
 
 export const WishesSection = () => {
-  const [newWish, setNewWish] = useState('');
-  const [wishAuthor, setWishAuthor] = useState('');
-  const [wishes, setWishes] = useState<Array<{id: string, text: string, author: string, timestamp: any, createdAt?: any}>>([]);
+  const [newWish, setNewWish] = useState("");
+  const [wishAuthor, setWishAuthor] = useState("");
+  const [wishes, setWishes] = useState<
+    Array<{
+      id: string;
+      text: string;
+      author: string;
+      timestamp: string;
+      createdAt?: string;
+    }>
+  >([]);
 
   // Load wishes from Firestore
   useEffect(() => {
-    const wishesRef = collection(db, 'birthdayWishes');
-    const q = query(wishesRef, orderBy('createdAt', 'desc'));
-    
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const wishesData = snapshot.docs.map(doc => {
-        const data = doc.data();
-        return {
-          id: doc.id,
-          text: data.text || '',
-          author: data.author || '',
-          timestamp: data.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
-          createdAt: data.createdAt
-        };
-      });
-      setWishes(wishesData);
-    }, (error) => {
-      console.error("Error fetching wishes:", error);
-      // Fallback to localStorage if Firebase fails
-      const savedWishes = localStorage.getItem('miiahBirthdayWishes');
-      if (savedWishes) {
-        setWishes(JSON.parse(savedWishes));
+    const wishesRef = collection(db, "birthdayWishes");
+    const q = query(wishesRef, orderBy("createdAt", "desc"));
+
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const wishesData = snapshot.docs.map((doc) => {
+          const data = doc.data();
+          return {
+            id: doc.id,
+            text: data.text || "",
+            author: data.author || "",
+            timestamp:
+              data.createdAt?.toDate?.()?.toISOString() ||
+              new Date().toISOString(),
+            createdAt: data.createdAt,
+          };
+        });
+        setWishes(wishesData);
+      },
+      (error) => {
+        console.error("Error fetching wishes:", error);
+        // Fallback to localStorage if Firebase fails
+        const savedWishes = localStorage.getItem("miiahBirthdayWishes");
+        if (savedWishes) {
+          setWishes(JSON.parse(savedWishes));
+        }
       }
-    });
+    );
 
     return () => unsubscribe();
   }, []);
@@ -45,11 +65,15 @@ export const WishesSection = () => {
   const formatTimestamp = (timestamp: string) => {
     const date = new Date(timestamp);
     const now = new Date();
-    const diffInHours = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60));
-    
+    const diffInHours = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60 * 60)
+    );
+
     if (diffInHours < 1) {
-      const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
-      return diffInMinutes < 1 ? 'Just now' : `${diffInMinutes}m ago`;
+      const diffInMinutes = Math.floor(
+        (now.getTime() - date.getTime()) / (1000 * 60)
+      );
+      return diffInMinutes < 1 ? "Just now" : `${diffInMinutes}m ago`;
     } else if (diffInHours < 24) {
       return `${diffInHours}h ago`;
     } else {
@@ -60,13 +84,13 @@ export const WishesSection = () => {
   const handleSubmitWish = async () => {
     if (newWish.trim() && wishAuthor.trim()) {
       try {
-        await addDoc(collection(db, 'birthdayWishes'), {
+        await addDoc(collection(db, "birthdayWishes"), {
           text: newWish.trim(),
           author: wishAuthor.trim(),
-          createdAt: serverTimestamp()
+          createdAt: serverTimestamp(),
         });
-        setNewWish('');
-        setWishAuthor('');
+        setNewWish("");
+        setWishAuthor("");
       } catch (error) {
         console.error("Error adding wish:", error);
         // Fallback to localStorage
@@ -74,13 +98,16 @@ export const WishesSection = () => {
           id: Date.now().toString(),
           text: newWish.trim(),
           author: wishAuthor.trim(),
-          timestamp: new Date().toISOString()
+          timestamp: new Date().toISOString(),
         };
         const updatedWishes = [wish, ...wishes];
         setWishes(updatedWishes);
-        localStorage.setItem('miiahBirthdayWishes', JSON.stringify(updatedWishes));
-        setNewWish('');
-        setWishAuthor('');
+        localStorage.setItem(
+          "miiahBirthdayWishes",
+          JSON.stringify(updatedWishes)
+        );
+        setNewWish("");
+        setWishAuthor("");
       }
     }
   };
@@ -130,10 +157,10 @@ export const WishesSection = () => {
         <h3 className="font-playfair text-3xl font-semibold text-center text-navy mb-8">
           Birthday Messages
         </h3>
-        
+
         {wishes.map((wish, index) => (
-          <Card 
-            key={wish.id} 
+          <Card
+            key={wish.id}
             className={`transform transition-all duration-500 hover:scale-105 shadow-xl border-gold/20 animate-slide-in-left`}
             style={{ animationDelay: `${index * 0.1}s` }}
           >
@@ -142,8 +169,9 @@ export const WishesSection = () => {
                 <div className="bg-gold rounded-full p-3 flex-shrink-0">
                   <Heart className="w-5 h-5 text-navy" />
                 </div>
-                <div className="flex-1">
-                  <blockquote className="font-cormorant text-lg text-charcoal mb-3 italic">
+                {/* Add min-w-0 to allow flex item to shrink below its content size */}
+                <div className="flex-1 min-w-0">
+                  <blockquote className="font-cormorant text-lg text-charcoal mb-3 italic break-words">
                     "{wish.text}"
                   </blockquote>
                   <div className="flex items-center justify-between">
@@ -171,10 +199,12 @@ export const WishesSection = () => {
           <CardContent className="p-8">
             <Star className="w-8 h-8 text-navy mx-auto mb-4" />
             <blockquote className="font-playfair text-2xl md:text-3xl font-semibold text-navy mb-4 italic">
-              "Age is merely mind over matter. If you don't mind, it doesn't matter."
+              The more you celebrate your life, the more there is in life to
+              celebrate.
             </blockquote>
             <p className="font-cormorant text-lg text-charcoal">
-              Here's to another year of creativity, friendship, and beautiful designs! 🥂
+              Here's to another year of creativity, friendship and successful
+              careers! 🥂
             </p>
           </CardContent>
         </Card>
