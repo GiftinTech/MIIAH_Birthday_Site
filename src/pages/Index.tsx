@@ -2,7 +2,10 @@ import React, { Suspense, lazy } from "react";
 import { BirthdayGate } from "@/components/BirthdayGate";
 import { Header } from "@/components/Header";
 
-import couchShot from "../assets/images/couchshot.jpg";
+import couchShot from "@/assets/images/couchshot.jpg";
+import gif4 from "@/assets/gif/winnie-the-pooh.gif";
+
+import floorImg from "@/assets/images/floorImg.jpg";
 
 // Lazy load all section components
 const LazyBirthdayPlayer = lazy(() => import("@/components/BirthdayPlayer"));
@@ -47,7 +50,7 @@ const Index = () => {
               ))}
             </h1>
 
-            <div className="flex flex-col md:flex-row items-center justify-center md:space-x-8 mb-12">
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-center md:space-x-8 mb-12">
               <div className="mb-8 md:mb-0 md:flex-shrink-0 md:w-1/2 lg:w-2/5">
                 <img
                   src={couchShot}
@@ -68,6 +71,9 @@ const Index = () => {
                   — With love from Gifty
                 </p>
               </div>
+            </div>
+            <div className="absolute top-50 md:top-0 right-0 z-0 w-[20%] h-[20%]">
+              <img src={gif4} alt="Dancing Pooh" />
             </div>
 
             <div className="bg-gradient-gold rounded-3xl p-8 shadow-2xl max-w-2xl mx-auto text-center">
@@ -91,12 +97,15 @@ const Index = () => {
 
         {/* Birthday Song Player - Lazy Loaded */}
         <Suspense fallback={<SectionLoadingFallback />}>
-          <section className="py-16 px-2 sm:px-4 bg-white">
-            <div className="max-w-4xl mx-auto text-center">
+          <section className="relative  py-16 px-2 sm:px-4 bg-white">
+            <div className="z-10 relative max-w-4xl mx-auto text-center">
               <h2 className="font-playfair text-4xl md:text-5xl font-semibold text-navy mb-8">
                 Birthday Serenade for MIIAH
               </h2>
               <LazyBirthdayPlayer autoPlay={true} />
+            </div>
+            <div className="absolute top-0 md:top-40 left-0 z-0 w-[20%] h-[20%]">
+              <img src={gif4} alt="Dancing Pooh" />
             </div>
           </section>
         </Suspense>
@@ -127,11 +136,18 @@ const Index = () => {
 
         {/* Birthday Wishes - Lazy Loaded */}
         <Suspense fallback={<SectionLoadingFallback />}>
-          <section className="py-20 px-4 bg-gradient-gold">
-            <div className="max-w-4xl mx-auto">
-              <h2 className="font-playfair text-4xl md:text-5xl font-semibold text-center text-navy mb-16">
-                Birthday Wishes for MIIAH
-              </h2>
+          <section className="sm:py-20 py-10  bg-gradient-gold">
+            <h2 className="font-playfair text-4xl mb-10 md:text-5xl font-semibold text-center text-navy">
+              Birthday Wishes for MIIAH
+            </h2>
+            <div className="w-[100vw] mb-16 sm:absolute sm:top-50 sm:right-0">
+              <img
+                src={floorImg}
+                className="w-[100vw] h-[580px] lg:h-[600px]"
+                alt="An image of MIIAH."
+              />
+            </div>
+            <div className="max-w-4xl px-4 mx-auto">
               <LazyWishesSection />
             </div>
           </section>

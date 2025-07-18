@@ -3,6 +3,8 @@ import { Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
+import dressDoorImg from "@/assets/images/dressDoorPic.jpg";
+
 const SocialFollow = () => {
   const socialAccounts = [
     {
@@ -22,8 +24,15 @@ const SocialFollow = () => {
   ];
 
   return (
-    <section className="py-20 px-4 bg-gradient-cream">
-      <div className="max-w-4xl mx-auto text-center">
+    <section className="py-10 sm:py-20 bg-gradient-cream">
+      <div className=" rounded-full border-0 sm:z-0 sm:absolute sm:bottom-50 mb-5 sm:mb-0 sm:right-0 sm:translate-x-20">
+        <img
+          src={dressDoorImg}
+          className="sm:w-2/3 lg:w-[400px]"
+          alt="An image of MIIAH."
+        />
+      </div>
+      <div className="relative  px-4 z-10 max-w-4xl mx-auto text-center">
         <h2 className="font-playfair text-4xl md:text-5xl font-semibold text-navy mb-4">
           Follow MIIAH's Journey
         </h2>

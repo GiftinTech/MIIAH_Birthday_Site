@@ -194,7 +194,7 @@ const WishesSection = () => {
       </div>
 
       {/* Birthday Quote */}
-      <div className="mt-16 text-center">
+      <div className="relative z-10 mt-16 text-center">
         <Card className="bg-gradient-gold border-gold/30 shadow-2xl">
           <CardContent className="p-8">
             <Star className="w-8 h-8 text-navy mx-auto mb-4" />

@@ -200,10 +200,13 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
     setViewMode("birthday");
   };
 
+  {
+    /* Home page button for testing pre and post birthday mode */
+  }
   if (effectiveIsBirthday) {
     return (
       <>
-        <div className="fixed top-4 right-4 z-50 flex gap-2">
+        {/* <div className="fixed top-4 right-4 z-50 flex gap-2">
           <Button
             onClick={() => setViewMode("gate")}
             className="bg-gold/20 hover:bg-gold/30 text-charcoal border border-gold/30 px-4 py-2 rounded-lg text-xs"
@@ -216,7 +219,7 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
           >
             🔍 Post-Birthday Page
           </Button>
-        </div>
+        </div> */}
         {children}
       </>
     );
@@ -224,7 +227,7 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
 
   if (effectiveIsPostBirthday) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-cream via-white to-champagne flex items-center justify-center px-4">
+      <div className="min-h-screen py-10 sm:py-20  bg-gradient-to-br from-cream via-white to-champagne flex items-center justify-center px-4">
         <Card className="max-w-4xl mx-auto shadow-2xl border-gold/20">
           <CardContent className="py-12 px-2 sm:p-12  text-center">
             <div className="mb-8">
@@ -299,7 +302,7 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-cream via-white to-champagne flex items-center justify-center px-4">
+    <div className="min-h-screen py-10 sm:py-20 bg-gradient-to-br from-cream via-white to-champagne flex items-center justify-center px-4">
       <Card className="max-w-4xl mx-auto shadow-2xl  border-gold/20">
         <CardContent className="py-12 px-2 sm:p-12 text-center">
           <div className="mb-8">
@@ -382,7 +385,7 @@ export const BirthdayGate = ({ children }: BirthdayGateProps) => {
               Come back on her special day to celebrate with her!
             </p>
 
-            {/* test mode ui */}
+            {/* test mode pre-birthday page */}
             {/* <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={handleTestAccess}

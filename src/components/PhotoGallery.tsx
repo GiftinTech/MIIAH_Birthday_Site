@@ -3,10 +3,12 @@ import { Camera, Heart, ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 // Import your image assets
-import artWork from "../assets/images/art.jpg";
-import braidShot from "../assets/images/braidshot.jpg";
-import newYearsShot from "../assets/images/newyearsshot.jpg";
-import staircaseShot from "../assets/images/staircaseshot.jpg";
+import artWork from "@/assets/images/art.jpg";
+import braidShot from "@/assets/images/braidshot.jpg";
+import newYearsShot from "@/assets/images/newyearsshot.jpg";
+import staircaseShot from "@/assets/images/staircaseshot.jpg";
+import dressDoorImg2 from "@/assets/images/dressDoorPic2.png";
+import profImg from "@/assets/images/profShot.jpg";
 
 // Define a type for a photo object
 interface Photo {
@@ -22,16 +24,25 @@ const PhotoGallery = () => {
 
   // Personal memory photos
   const photos: Photo[] = [
-    // Explicitly type photos array
     {
       url: artWork,
       caption: "You make my world so colourful like this painting",
       title: "An Artist",
     },
     {
+      url: profImg,
+      caption: "I'm proud of the woman you've become.",
+      title: "Growth",
+    },
+    {
       url: braidShot,
       caption: "This picture symbolises how much you've cheered me on.",
       title: "Cheer Leader",
+    },
+    {
+      url: dressDoorImg2,
+      caption: "You are an inspiration to those around you.",
+      title: "Growth",
     },
     {
       url: staircaseShot,
@@ -64,12 +75,12 @@ const PhotoGallery = () => {
     <div className="animate-fade-in">
       {/* Main Gallery */}
       <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden mb-12">
-        <div className="relative h-96 md:h-[500px]">
+        <div className="relative h-96 sm:h-[680px] lg:h-[800px]">
           <img
-            src={photos[currentSlide].url} // Removed query params for cleaner src
+            src={photos[currentSlide].url}
             alt={photos[currentSlide].caption}
             className="w-full h-full object-cover transition-all duration-500 cursor-pointer"
-            onClick={() => handlePhotoClick(photos[currentSlide])} // Click main image to open modal
+            onClick={() => handlePhotoClick(photos[currentSlide])}
           />
 
           {/* Overlay */}
@@ -180,8 +191,8 @@ const PhotoGallery = () => {
       <div className="text-center mt-12">
         <div className="bg-gradient-gold rounded-2xl p-8 max-w-2xl mx-auto">
           <blockquote className="font-cormorant text-2xl md:text-3xl text-navy italic mb-4">
-            "Every photo tells a story of friendship, laughter, and
-            unforgettable moments with you"
+            "Every photo tells a story of friendship, growth and unforgettable
+            moments with you"
           </blockquote>
           <div className="flex items-center justify-center space-x-2 text-charcoal">
             <Heart className="w-5 h-5 text-gold" />
